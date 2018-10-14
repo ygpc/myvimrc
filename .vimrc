@@ -1,4 +1,4 @@
-" setting
+"setting
 "vi互換モードをoff
 set nocompatible
 "文字コードをUFT-8に設定
@@ -30,7 +30,7 @@ set virtualedit=onemore
 " インデントはスマートインデント
 "set smartindent
 " ビープ音を可視化
-set visualbell
+set visualbell t_vb=
 " 括弧入力時の対応する括弧を表示
 set showmatch
 " ステータスラインを常に表示
@@ -48,9 +48,9 @@ set list listchars=tab:\▸\-
 " Tab文字を半角スペースにする
 "set expandtab
 " 行頭以外のTab文字の表示幅（スペースいくつ分）
-set tabstop=2
+set tabstop=4
 " 行頭でのTab文字の表示幅
-set shiftwidth=2
+set shiftwidth=4
 
 
 " 検索系
@@ -68,74 +68,7 @@ set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "インサートモードでEscをjjにバインド
 inoremap <silent> jj <Esc>
- " Note: Skip initialization for vim-tiny or vim-small.
-   if 0 | endif
- 
-if &compatible
-      endif
- 
-     " Required:
-      set runtimepath+=~/.vim/bundle/neobundle.vim/
- 
-          " Required:
-            call neobundle#begin(expand('~/.vim/bundle/'))
- 
-          " Let NeoBundle manage NeoBundle
-           " Required:
-            NeoBundleFetch 'Shougo/neobundle.vim'
-           " My Bundles here:
-           " Refer to |:NeoBundle-examples|.
-           " Note: You don't set neobundle setting in .gvimrc!
- 
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'thinca/vim-quickrun'
-						call neobundle#end()
- 
-           " Required:
-           filetype plugin indent on
- 
-          " If there are uninstalled bundles found on startup,
-         " this will conveniently prompt you to install them.
-          NeoBundleCheck
-let g:quickrun_config={}
-let g:quickrun_config['tex'] = {
-            \   'command' : 'latexmk',
-            \   'outputter' : 'error',
-            \   'outputter/error/error' : 'quickfix',
-						\ 'hook/sweep/files' : [
-						\                      '%S:p:r.aux',
-						\                      '%S:p:r.bbl',
-						\                      '%S:p:r.blg',
-						\                      '%S:p:r.dvi',
-						\                      '%S:p:r.fdb_latexmk',
-						\                      '%S:p:r.fls',
-						\                      '%S:p:r.log',
-						\                      '%S:p:r.out'
-						\                      ],
-						\  'exec': ['%c -gg -pdfdvi %s', 'xdg-open %s:r.pdf']           
-						\ }
 
-if &term =~ "xterm"
-    let &t_ti .= "\e[?2004h"
-    let &t_te .= "\e[?2004l"
-    let &pastetoggle = "\e[201~"
-
-    function XTermPasteBegin(ret)
-        set paste
-        return a:ret
-    endfunction
-
-    noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
-    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-    cnoremap <special> <Esc>[200~ <nop>
-    cnoremap <special> <Esc>[201~ <nop>
-endif
+autocmd FileType python setl autoindent
+autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
